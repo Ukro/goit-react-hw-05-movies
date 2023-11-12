@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
 import api from '../../services/api';
 import Loader from 'components/Loader/Loader';
-import { FcSearch } from 'react-icons/fc';
+// import { FcSearch } from 'react-icons/fc';
 import s from './MovieDetailsPage.module.css';
 
 const MovieDetailsPage = () => {
@@ -10,6 +10,7 @@ const MovieDetailsPage = () => {
   const [movieInfo, setMovieInfo] = useState(null);
   const [loading, setLoading] = useState(false);
   const location = useLocation();
+  const cameBack = location.state?.from ?? '/';
 
   useEffect(() => {
     const onDetalisMovie = async () => {
@@ -28,10 +29,8 @@ const MovieDetailsPage = () => {
 
   return (
     <>
-      <Link to={location?.state?.from ?? '/movies'}>
-        <button type="button">
-          <FcSearch /> Go back
-        </button>
+      <Link to={cameBack} >Go back
+        
       </Link>
       {loading && <Loader />}
       {movieInfo && (
@@ -62,10 +61,10 @@ const MovieDetailsPage = () => {
         <h3>Additional information</h3>
         <ul>
           <li>
-            <Link to="cast">Cast</Link>
+            <Link to="cast" state={{from: cameBack}} >Cast</Link>
           </li>
           <li>
-            <Link to="reviews">Reviews</Link>
+            <Link to="reviews" state={{from: cameBack}}>Reviews</Link>
           </li>
         </ul>
         <hr />
